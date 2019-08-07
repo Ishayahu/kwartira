@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+    <style>
+    .square{
+        {#display: inline;#}
+        width: 90px;
+        height: 100px;
+
+    }
+    .red{
+        background-color:red;
+    }
+    .green{
+        background-color:green;
+    }
+    .yellow{
+        background-color:yellow;
+    }
+    .orange{
+        background-color:#F55B0F;
+    }
+    </style>
+{% endblock %}
+{% block content %}
+    {{user}}
+    <p><a href="{% url 'visit_add' %}">Добавить посещение</a> </p>
+    <table>
+    <tr>
+        <td>
+            <ol>
+            {% for visit in visits %}
+                {% if visit.pk %}
+                    {% if visit.missing %}
+                        <li><strike><a href="{% url 'visit_show_by_id' visit.pk %}">{{ visit.date }}</a></strike></li>
+                    {% else %}
+                        <li><a href="{% url 'visit_show_by_id' visit.pk %}">{{ visit.date }}</a> {{ visit.status | safe }}</li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{% url 'visit_show_by_date' visit.date_str %}">{{ visit.date }}</a> {{ visit.status | safe }}</li>
+                {% endif %}
+            {% endfor %}
+            </ol>
+
+        </td>
+        <td>
+            <form method="post" action="">
+                Тут можно указать с какого по какое вас не было
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <button type="submit" value="Save">Сохранить</button>
+            </form>
+        </td>
+    </tr>
+    </table>
+
+
+
+
+
+{% endblock %}

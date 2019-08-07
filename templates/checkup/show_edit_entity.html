@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {{ item.html | safe}}
+    <br />
+
+    <a href="{% url item.delete_url_name item.pk %}">Удалить</a>
+
+
+{% endblock %}

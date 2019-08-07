@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <ol>
+        {% for item in items %}
+            <li><a href="{% url item.show_url_name item.pk %}">{{ item.to_string }}</a></li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

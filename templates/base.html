@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="https://yarnpkg.com/en/package/normalize.css" type="text/css">
+	<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <title>{{ title }}</title>
+
+{#    <script type="text/javascript" src="{% static "jquery/dist/jquery.js" %}"></script>#}
+    <script type="text/javascript" src="{% static "js/jquery/3.2.1/jquery-3.2.1.min.js" %}"></script>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <a href="{% url 'index' %}">На главную</a><hr />
+    {% if error_messages %}
+        <div style="color:red">
+            <h3>Внимание!</h3>
+            <ul>
+            {% for error in error_messages %}
+                <li>{{ error }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+        <hr />
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+v 0.1a (2019-07-22)
+</body>
+</html>

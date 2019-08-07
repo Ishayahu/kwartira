@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/showdown@1.9.0/dist/showdown.min.js" ></script>
+    <script>
+        function edit() {
+            var div = document.getElementById('main');
+            var content = document.getElementById('text').innerHTML;
+            var converter = new showdown.Converter();
+            var html = converter.makeMarkdown(content);
+            div.innerHTML = `
+                <textarea id="text" cols="200" rows="20">${html}</textarea><br />
+                <button value="save" onclick="save()" >Сохранить</button>
+            `;
+        }
+        function save() {
+            var div = document.getElementById('main');
+            var new_content = document.getElementById('text').value;
+            var converter = new showdown.Converter();
+            var html = converter.makeHtml(new_content);
+            div.innerHTML = `
+                <div id="text">${html}</div><br />
+                <button value="edit" onclick="edit()" >Редактировать</button>
+            `;
+        }
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="main">
+        <div id="text">{{ file_content | safe}}</div><br />
+        <button value="edit" onclick="edit()" >Редактировать</button>
+    </div>
+
+
+{% endblock %}
