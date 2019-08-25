@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table border="1" style="border-collapse: unset;">
+        {% for room in rooms %}
+            {% ifequal room.people_count 1 %}
+                <tr>
+                    <td><a href="{% url 'room_show' room.number %}">{{ room.number }}</a></td>
+                    {% if room.user1 %}
+                        <td class="{{ room.user1.style }}">
+                            {{room.user1.last_name}} {{room.user1.first_name}} {{ room.user1.missing }} {{ room.user1.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+            {% endifequal %}
+            {% ifequal room.people_count 2 %}
+                <tr>
+                    <td rowspan="2"><a href="{% url 'room_show' room.number %}">{{ room.number }}</a></td>
+                    {% if room.user1 %}
+                        <td class="{{ room.user1.style }}">
+                            {{room.user1.last_name}} {{room.user1.first_name}} {{ room.user1.missing }} {{ room.user1.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if room.user2 %}
+                        <td class="{{ room.user2.style }}">
+                            {{room.user2.last_name}} {{room.user2.first_name}} {{ room.user2.missing }} {{ room.user2.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+            {% endifequal %}
+            {% ifequal room.people_count 3 %}
+                <tr>
+                    <td rowspan="3"><a href="{% url 'room_show' room.number %}">{{ room.number }}</a></td>
+                    {% if room.user1 %}
+                        <td class="{{ room.user1.style }}">
+                            {{room.user1.last_name}} {{room.user1.first_name}} {{ room.user1.missing }} {{ room.user1.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if room.user2 %}
+                        <td class="{{ room.user2.style }}">
+                            {{room.user2.last_name}} {{room.user2.first_name}} {{ room.user2.missing }} {{ room.user2.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    {% if room.user3 %}
+                        <td class="{{ room.user3.style }}">
+                            {{room.user3.last_name}} {{room.user3.first_name}} {{ room.user3.missing }} {{ room.user3.untill }}
+                        </td>
+                    {% else %}
+                        <td>-------------</td>
+                    {% endif %}
+                </tr>
+            {% endifequal %}
+        {% endfor %}
+    </table>
+{% endblock %}

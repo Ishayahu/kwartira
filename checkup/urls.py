@@ -8,7 +8,11 @@ urlpatterns = [
 
     url(r'^$', index, name='index'),
     # url(r'^faq/(?P<language_code>[a-zA-Z_]+)/$', filebased.file_edit, {'filename': 'faq'}, name='faq'),
-    url(r'^visit/add/$', visit_add,name='visit_add'),
+    # думаю что больше не нужно, так как вводить проще нажав на посещение
+    # url(r'^visit/add/$', visit_add,name='visit_add'),
+    url(r'^visit/add/shabat/$', shabat_add,name='shabat_add'),
+    url(r'^rooms/$', rooms,name='rooms'),
+    url(r'^room/show/(?P<room_number>\d+)/$', room_show,name='room_show'),
     url(r'^visit/show/(?P<visit_id>\d+)/$', visit_show_by_id,name='visit_show_by_id'),
     url(r'^visit/show/for_date/(?P<date>\d{4}-\d{2}-\d{2})/$', visit_show_by_date, name='visit_show_by_date'),
     url(r'^visit/show/last/(?P<count>\d+)/for_user/(?P<user_id>\d+)/$', visit_show_for_user, name='visit_show_for_user'),

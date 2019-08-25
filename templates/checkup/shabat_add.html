@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        <input type="date" value="{{ last_shabat }}" name="shabat_date"> <br />
+        <table>
+            <tr>
+                <th>ФИО</th>
+                <th>Вовремя</th>
+                <th>Опоздал</th>
+{#                <th>В отъезде</th>#}
+            </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.to_string }}</td>
+                <td><input type="radio" name="{{ user.pk }}" value="1"></td>
+                <td><input type="radio" name="{{ user.pk }}" value="O"></td>
+{#                <td><input type="radio" name="{{ user.pk }}" value="-"></td>#}
+            </tr>
+        {% endfor %}
+        </table>
+        <button type="submit" value="Save">Сохранить</button>
+    </form>
+
+
+{% endblock %}

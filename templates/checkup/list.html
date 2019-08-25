@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <ol>
+    <table>
         {% for item in items %}
-            <li><a href="{% url item.show_url_name item.pk %}">{{ item.to_string }}</a></li>
+            <tr>
+                <td><a href="{% url item.show_url_name item.pk %}">{{ item.to_string }}</a></td>
+                <td><span style="background-color: {{ item.score_color_code }}">[{{ item.score }}]</span></td>
+                <td>{% if item.room_number %}№ {{ item.room_number }}{% endif %}</td>
+            </tr>
         {% endfor %}
-    </ol>
-
+    </table>
+    <p><a href="{% url 'shabat_add' %}">Ввести посещения за шабат</a> </p>
+    <p><a href="{% url 'rooms' %}">Расселение по комнатам</a> </p>
 {% endblock %}
