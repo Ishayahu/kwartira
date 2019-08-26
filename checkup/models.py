@@ -114,7 +114,7 @@ class Visit(models.Model):
                 status = 'red'
             elif self.shacharit in "OoОо":
                 status = 'orange'
-            elif self.shacharit == '-':
+            elif self.shacharit == '-' or self.shacharit == 'Б':
                 status = 'lime'
             elif self.shacharit:
                 status = 'green'
@@ -147,7 +147,7 @@ class Visit(models.Model):
                 return 1
             if self.shacharit in "OoОо":
                 return 0.5
-            elif self.shacharit == '-':
+            elif self.shacharit == '-' or self.shacharit == 'Б':
                 return 0.1
             elif self.shacharit:
                 return 0
@@ -164,5 +164,7 @@ class UserProfile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
     untill = models.DateField(blank = True, null = True)
+    keys = models.BooleanField(default = False)
+    jew_status = models.BooleanField(default = True)
     def __str__(self):
         return "{} {}".format(self.user,self.untill)

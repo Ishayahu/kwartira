@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 import datetime
 
 
-ADMINS = (1,)
+ADMINS = (1,9)
 @login_required
 def visit_add(request):
     user = request.user
@@ -38,7 +38,7 @@ def shabat_add(request):
     if user.pk not in ADMINS:
         return HttpResponseNotFound("Только для одминов")
 
-    users = User.objects.all()
+    users = User.objects.all().order_by('last_name').exclude(id__in = ADMINS)
     for user in users:
         user.show_url_name = 'visit_show_default_for_user'
         user.to_string = "{} {}".format(user.last_name, user.first_name)
@@ -49,11 +49,14 @@ def shabat_add(request):
         print(date)
         if date.weekday() != 5:
             return HttpResponseNotFound("Не шабат")
+        a = request.POST
+        print(a)
         for user in users:
-            a = request.POST
+
             if str(user.pk) in request.POST:
                 visit, created = Visit.objects.get_or_create(date = date, user = user)
-                if not visit.missing:  # чтобы случайно не отметить того, кого не было
+                # if not visit.missing:  # чтобы случайно не отметить того, кого не было
+                if (not visit.missing) and (not visit.shacharit):  # чтобы не перезаписать того, кого уже отмечали
                     visit.shacharit = request.POST[str(user.pk)]
                     visit.save()
         return HttpResponseRedirect(reverse('index'))
@@ -132,7 +135,10 @@ def visit_show_for_user(request,count,user_id):
             result.append(NotMarkedDay(current_date))
         current_date = current_date - one_day
 
-    return render(request, 'checkup/last_visits_for_user.html', {'visits': result, 'user': user, 'form': form})
+    profile, created = UserProfile.objects.get_or_create(user = user)
+
+    return render(request, 'checkup/last_visits_for_user.html', {'visits': result, 'user': user,
+                                                                 'profile': profile, 'form': form})
 
 @login_required
 def visit_show_by_id(request,visit_id):
@@ -181,9 +187,9 @@ def visit_show_by_date(request,date):
 @login_required
 def index(request):
 
-    users = User.objects.all()
+    users = User.objects.all().order_by('last_name').exclude(id__in = ADMINS)
     user2room,_ = make_room_dict()
-    print(user2room)
+    # print(user2room)
     count = 7*4
     for user in users:
         user.show_url_name = 'visit_show_default_for_user'

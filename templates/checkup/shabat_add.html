@@ -9,6 +9,7 @@
                 <th>ФИО</th>
                 <th>Вовремя</th>
                 <th>Опоздал</th>
+                <th>Болел</th>
 {#                <th>В отъезде</th>#}
             </tr>
         {% for user in users %}
@@ -16,6 +17,7 @@
                 <td>{{ user.to_string }}</td>
                 <td><input type="radio" name="{{ user.pk }}" value="1"></td>
                 <td><input type="radio" name="{{ user.pk }}" value="O"></td>
+                <td><input type="radio" name="{{ user.pk }}" value="Б"></td>
 {#                <td><input type="radio" name="{{ user.pk }}" value="-"></td>#}
             </tr>
         {% endfor %}
